@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "commonjs",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": [
+        "*"
+      ],
+      "@auth/*": [
+        "services/auth-service/src/*"
+      ],
+      "@user/*": [
+        "services/user-service/src/*"
+      ],
+      "@resume/*": [
+        "services/resume-service/src/*"
+      ],
+      "@ats/*": [
+        "services/ats-service/src/*"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
