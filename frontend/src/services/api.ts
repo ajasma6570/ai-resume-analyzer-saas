@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: "http://localhost:3000/api",
+    baseURL: import.meta.env.VITE_API_URL || "http://localhost:3000/api",
     withCredentials: true
 })
 
@@ -38,8 +38,9 @@ api.interceptors.response.use(
             originalRequest._retry = true;
 
             try {
+                const apiBaseURL = import.meta.env.VITE_API_URL || "http://localhost:3000/api";
                 const response = await axios.get(
-                    "http://localhost:3000/api/auth/refresh-token",
+                    `${apiBaseURL}/auth/refresh-token`,
                     {
                         withCredentials: true,
                     }
