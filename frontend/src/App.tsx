@@ -6,6 +6,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { useAuthStore } from "./store/auth.store";
 import AuthLoader from "./components/AuthLoader";
 import AuthPage from "./pages/AuthPage";
+import NotFound from "./pages/NotFound";
 import { Toaster } from "react-hot-toast";
 
 function App() {
@@ -44,6 +45,9 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          {/* Wildcard 404 Route */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </AuthLoader>
     </BrowserRouter>
