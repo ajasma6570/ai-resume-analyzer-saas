@@ -5,8 +5,16 @@ import { connectDB } from "./config/db";
 
 const PORT = env.PORT;
 
-connectDB()
+const startServer = async () => {
+    try {
+        await connectDB();
+        app.listen(PORT, () => {
+            logger.info(`User Service is running on port ${PORT}`);
+        });
+    } catch (err) {
+        logger.error("User Service failed to start:", { error: err });
+        process.exit(1);
+    }
+};
 
-app.listen(PORT, () => {
-    logger.info(`User Service is running on port ${PORT}`)
-});
+startServer();

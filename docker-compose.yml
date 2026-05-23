@@ -1,0 +1,41 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - NODE_ENV=production
+      # Ports inside the container for microservices
+      - API_GATEWAY_PORT=3000
+      - AUTH_SERVICE_PORT=3001
+      - USER_SERVICE_PORT=3002
+      - RESUME_SERVICE_PORT=3003
+      - ATS_SERVICE_PORT=3004
+      # MongoDB Atlas URIs (Replace with your actual MongoDB Atlas connection strings or use env files)
+      - AUTH_MONGO_URI=${AUTH_MONGO_URI}
+      - RESUME_MONGO_URI=${RESUME_MONGO_URI}
+      - ATS_MONGO_URI=${ATS_MONGO_URI}
+      # JWT configs
+      - ACCESS_TOKEN_SECRET=${ACCESS_TOKEN_SECRET}
+      - REFRESH_TOKEN_SECRET=${REFRESH_TOKEN_SECRET}
+      - ACCESS_TOKEN_EXPIRE=15m
+      - REFRESH_TOKEN_EXPIRE=7d
+      # External API Keys
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+    restart: always
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - VITE_API_URL=${VITE_API_URL}
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    restart: always

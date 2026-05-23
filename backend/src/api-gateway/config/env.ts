@@ -4,7 +4,9 @@ dotenv.config();
 
 export const env = {
     PORT:
-        process.env.API_GATEWAY_PORT || 3000,
+        process.env.PORT ||
+        process.env.API_GATEWAY_PORT ||
+        3000,
 
     NODE_ENV:
         process.env.NODE_ENV || "development",

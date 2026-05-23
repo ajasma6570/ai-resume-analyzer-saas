@@ -5,8 +5,16 @@ import { env } from "@auth/config/env";
 
 const PORT = env.PORT;
 
-connectDB()
+const startServer = async () => {
+    try {
+        await connectDB();
+        app.listen(PORT, () => {
+            logger.info(`Auth Service is running on port ${PORT}`);
+        });
+    } catch (err) {
+        logger.error("Auth Service failed to start:", { error: err });
+        process.exit(1);
+    }
+};
 
-app.listen(PORT, () => {
-    logger.info(`Auth Service is running on port ${PORT}`)
-});
+startServer();

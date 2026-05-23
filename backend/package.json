@@ -10,7 +10,7 @@
     "resume": "ts-node-dev --respawn -r tsconfig-paths/register src/services/resume-service/src/index.ts",
     "ats": "ts-node-dev --respawn -r tsconfig-paths/register src/services/ats-service/src/index.ts",
     "dev": "concurrently \"npm run gateway\" \"npm run auth\" \"npm run users\" \"npm run resume\" \"npm run ats\"",
-    "build": "tsc",
+    "build": "tsc && tsc-alias",
     "start": "node dist/api-gateway/index.js"
   },
   "keywords": [],
@@ -48,6 +48,7 @@
     "concurrently": "^9.2.1",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
+    "tsc-alias": "^1.8.17",
     "typescript": "^6.0.3"
   }
 }
