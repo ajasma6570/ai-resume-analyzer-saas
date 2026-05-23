@@ -17,13 +17,24 @@ const app = express();
 
 const PORT = env.PORT;
 
+const allowedOrigins = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    env.FRONTEND_URL
+].map(url => url.replace(/\/$/, ""));
+
 app.use(
     cors({
-        origin: [
-            "http://localhost:5173",
-            "http://127.0.0.1:5173",
-            env.FRONTEND_URL
-        ],
+        origin: (origin, callback) => {
+            if (!origin) return callback(null, true);
+            const cleanOrigin = origin.replace(/\/$/, "");
+            if (allowedOrigins.includes(cleanOrigin)) {
+                callback(null, true);
+            } else {
+                console.warn(`[CORS Blocked]: Request from ${origin} was rejected. Allowed origins are: ${allowedOrigins.join(", ")}`);
+                callback(new Error(`Origin ${origin} not allowed by CORS`));
+            }
+        },
         credentials: true,
     })
 );
