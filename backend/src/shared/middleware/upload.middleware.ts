@@ -1,29 +1,20 @@
 import multer from "multer";
+import fs from "fs";
+import path from "path";
+
+const uploadDir = path.join(process.cwd(), "uploads");
+
+// Automatically create the uploads directory if it does not exist
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
+}
 
 const storage = multer.diskStorage({
-
-    destination: (
-        req,
-        file,
-        cb
-    ) => {
-
-        cb(
-            null,
-            "src/services/resume-service/src/uploads"
-        );
+    destination: (req, file, cb) => {
+        cb(null, uploadDir);
     },
-
-    filename: (
-        req,
-        file,
-        cb
-    ) => {
-
-        cb(
-            null,
-            `${Date.now()}-${file.originalname}`
-        );
+    filename: (req, file, cb) => {
+        cb(null, `${Date.now()}-${file.originalname}`);
     },
 });
 
